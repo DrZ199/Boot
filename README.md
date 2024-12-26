@@ -22,7 +22,7 @@ NelsonBot is a Progressive Web App (PWA) chatbot that uses Hugging Face's Infere
    ```bash
    git clone <repository-url>
    cd NelsonBot
-   ```
+   ``` 
 
 2. Install dependencies:
    ```bash
