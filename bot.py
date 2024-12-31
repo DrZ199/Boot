@@ -1,15 +1,16 @@
 import os
 from dotenv import load_dotenv
 from telegram import Update
-from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from telegram.ext.webhook import WebhookHandler
 import requests
 
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 
-# Read API keys from environment variables
 BOT_TOKEN = os.getenv("7819805722:AAGRFk_78anuSlLdl0IJSc3EZ9mrwpK2tsU")
 MISTRAL_API_KEY = os.getenv("clkU70jpgcejg8ejWcYt3UidmLpFPJxK")
+WEBHOOK_URL = os.getenv("WEBHOOK_URL")  # Add your Vercel URL here
 
 # Mistral API call function
 def query_mistral_api(prompt):
@@ -28,12 +29,15 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     mistral_response = query_mistral_api(user_message)
     await update.message.reply_text(mistral_response)
 
-# Main function
+# Main function for webhook setup
 def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
-    print("Bot is running...")
-    app.run_polling()
 
-if __name__ == "__main__":
-    main()
+    # Add message handler
+    app.add_handler(WebhookHandler())
+
+    # Set webhook
+    app.set_webhook(url=WEBHOOK_URL)
+    print(f"Webhook set to {WEBHOOK_URL}")
+
+    return app  # Required for serverless platforms like Vercel
