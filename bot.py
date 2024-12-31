@@ -8,8 +8,8 @@ import requests
 load_dotenv()
 
 # Read API keys from environment variables
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
+BOT_TOKEN = os.getenv("7819805722:AAGRFk_78anuSlLdl0IJSc3EZ9mrwpK2tsU")
+MISTRAL_API_KEY = os.getenv("clkU70jpgcejg8ejWcYt3UidmLpFPJxK")
 
 # Mistral API call function
 def query_mistral_api(prompt):
